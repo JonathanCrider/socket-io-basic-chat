@@ -10,17 +10,17 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  socket.broadcast.emit('chat message', 'a user connected');
 
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    socket.broadcast.emit("chat message", "user disconnected");
   });
 });
 
 server.listen(3000, () => {
-  console.log('listening on port *:3000');
+  console.log('listening on port: 3000');
 });
